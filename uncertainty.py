@@ -101,7 +101,7 @@ if __name__ == "__main__":
     mathsFunctionString = sys.argv[1]
     function = MathsExpression(mathsFunctionString)
 
-    EPSILON = 7.0 / 3 - 4.0 / 3 - 1
+    EPSILON = sys.float_info.epsilon
 
     variables = function.variables
     for _, i in variables.items():
