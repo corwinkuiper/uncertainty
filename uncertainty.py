@@ -118,15 +118,20 @@ if __name__ == "__main__":
         defaultConnections[name] = float(numberUncertaintyList[0])
 
     for name, numberUncertaintyList in variables.items():
-        new_for_this = defaultConnections.copy()
+        forwardVars = defaultConnections.copy()
+        backwardVars = defaultConnections.copy()
 
         x = numberUncertaintyList[0]
         h = math.sqrt(EPSILON) * x
-        xph = x + h
-        dx = xph - x
+        if h == 0.0:
+            h = EPSILON
+        xForward = x + h
+        xBackward = x - h
+        dx = xForward - xBackward
 
-        new_for_this[name] = xph
-        slope = (function(new_for_this) - function(defaultConnections)) / dx
+        forwardVars[name] = xForward
+        backwardVars[name] = xBackward
+        slope = (function(forwardVars) - function(backwardVars)) / dx
 
         derivatives[name] = slope
 
